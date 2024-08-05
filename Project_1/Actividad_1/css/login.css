@@ -1,0 +1,18 @@
+.contenido{
+    border: 1px solid;
+    width: 700px;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 200px auto;
+}
+
+#inputsUserName{
+    margin: 10px;
+}
+#inputPassword{
+    margin: 10px;
+}
+#button{
+    width: 70px;
+    margin: 0 auto;
+}
