@@ -5,12 +5,12 @@ const usuarios = [
     { id: 4, usuario: 'usuario4', clave: '1121', intentos : 0}, 
     { id: 5, usuario: 'usuario5', clave: '3141', intentos : 0} 
 ];
-// Si no hay datos en localStorage, inicializar con el array de usuarios
+
 if (!localStorage.getItem('users')) {
     localStorage.setItem('users', JSON.stringify(usuarios));
 }
 
-// Cargar los usuarios desde localStorage
+
 const objetoGet = localStorage.getItem('users');
 const objeto = JSON.parse(objetoGet);
 
