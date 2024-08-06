@@ -6,63 +6,55 @@ const usuarios = [
     { id: 5, usuario: 'usuario5', clave: '3141', intentos : 0} 
 ];
 
-
-const objetoGet = localStorage.getItem('users');
-const objeto  =JSON.parse(objetoGet);
-
-function login() {
-
-    const userName =document.getElementById('inputUsername').value;
-    const userPassword =document.getElementById('passwordUser').value;
-    const findUser = usuarios.find((element) => element.usuario === userName);
-    const findIndex = usuarios.findIndex((element) => element.usuario === userName);
-    console.log(buscarUser(findIndex));
-if(buscarUser(findIndex) == 3){
-    alert(`Usuario bloqueado`)
-
-}else{
-    if(findUser.intentos == 3){
-        alert(`Usuario bloqueado`);
-        }else{
-        if(findUser == undefined) {
-            alert(`Ingrese credenciales`);
-        }else if(findUser.usuario === userName && findUser.clave === userPassword){
-            alert(`Sesion iniciada`);
-        }else{
-            alert(`Error credenciales invalidas`);
-            counterLogin(findUser.id);
-        }
-    }
-}
-
-        
-}
-
-
-
-
-let counter = 0;
-
-function  counterLogin(id) {
-    const findUser = usuarios.find((element) => element.id === id);
-        findUser.intentos ++
-        if(findUser.intentos == 3){
-            saveCounter();
-            
-        }
-
-}
-
-
-
-function  saveCounter() {
+if (!localStorage.getItem('users')) {
     localStorage.setItem('users', JSON.stringify(usuarios));
 }
 
 
-function buscarUser(numero) {
-    return objeto[numero].intentos;
-    
+const objetoGet = localStorage.getItem('users');
+const objeto = JSON.parse(objetoGet);
+
+function login() {
+    const userName = document.getElementById('inputUsername').value;
+    const userPassword = document.getElementById('passwordUser').value;
+    const findUser = objeto.find((element) => element.usuario === userName);
+    const findIndex = objeto.findIndex((element) => element.usuario === userName);
+
+    if (findUser === undefined) {
+        alert(`Ingrese credenciales`);
+        return;
+    }
+
+    console.log(buscarUser(findIndex));
+
+    if (buscarUser(findIndex) >= 3) {
+        alert(`Usuario bloqueado`);
+    } else {
+        if (findUser.intentos >= 3) {
+            alert(`Usuario bloqueado`);
+        } else {
+            if (findUser.usuario === userName && findUser.clave === userPassword) {
+                alert(`Sesion iniciada`);
+            } else {
+                alert(`Error credenciales invalidas`);
+                counterLogin(findUser.id);
+            }
+        }
+    }
 }
 
+let counter = 0;
 
+function counterLogin(id) {
+    const findUser = objeto.find((element) => element.id === id);
+    findUser.intentos++;
+    saveCounter();
+}
+
+function saveCounter() {
+    localStorage.setItem('users', JSON.stringify(objeto));
+}
+
+function buscarUser(numero) {
+    return objeto[numero].intentos;
+}
