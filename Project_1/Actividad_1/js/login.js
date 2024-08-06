@@ -7,30 +7,41 @@ const usuarios = [
 ];
 
 
-
+const objetoGet = localStorage.getItem('users');
+const objeto  =JSON.parse(objetoGet);
 
 function login() {
+
     const userName =document.getElementById('inputUsername').value;
     const userPassword =document.getElementById('passwordUser').value;
-
     const findUser = usuarios.find((element) => element.usuario === userName);
-        if(findUser.intentos == 3){
-            alert(`Usuario bloqueado`);
-            }else{
-            if(findUser == undefined) {
-                alert(`Ingrese credenciales`);
-            }else if(findUser.usuario === userName && findUser.clave === userPassword){
-                alert(`Sesion iniciada`);
-            }else{
-                alert(`Error credenciales invalidas`);
-                counterLogin(findUser.id);
-            }
+    const findIndex = usuarios.findIndex((element) => element.usuario === userName);
+    console.log(buscarUser(findIndex));
+if(buscarUser(findIndex) == 3){
+    alert(`Usuario bloqueado`)
+
+}else{
+    if(findUser.intentos == 3){
+        alert(`Usuario bloqueado`);
+        }else{
+        if(findUser == undefined) {
+            alert(`Ingrese credenciales`);
+        }else if(findUser.usuario === userName && findUser.clave === userPassword){
+            alert(`Sesion iniciada`);
+        }else{
+            alert(`Error credenciales invalidas`);
+            counterLogin(findUser.id);
         }
-    
+    }
+}
+
+        
 }
 
 
 
+
+let counter = 0;
 
 function  counterLogin(id) {
     const findUser = usuarios.find((element) => element.id === id);
@@ -46,6 +57,12 @@ function  counterLogin(id) {
 
 function  saveCounter() {
     localStorage.setItem('users', JSON.stringify(usuarios));
+}
+
+
+function buscarUser(numero) {
+    return objeto[numero].intentos;
+    
 }
 
 
